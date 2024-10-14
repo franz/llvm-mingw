@@ -10,13 +10,14 @@ RUN apt-get update -qq && \
 
 
 RUN git config --global user.name "LLVM MinGW" && \
-    git config --global user.email root@localhost
+    git config --global user.email root@localhost && \
+    git config --global init.defaultBranch main
 
 WORKDIR /build
 
 ENV TOOLCHAIN_PREFIX=/opt/llvm-mingw
 
-ARG TOOLCHAIN_ARCHS="i686 x86_64 armv7 aarch64"
+ARG TOOLCHAIN_ARCHS=x86_64
 
 ARG DEFAULT_CRT=ucrt
 

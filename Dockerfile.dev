@@ -16,11 +16,11 @@ WORKDIR /build
 
 ENV TOOLCHAIN_PREFIX=/opt/llvm-mingw
 
-ARG FULL_LLVM
+ARG FULL_LLVM=--full-llvm
 
 # Build LLVM
 COPY build-llvm.sh ./
-RUN ./build-llvm.sh $TOOLCHAIN_PREFIX
+RUN ./build-llvm.sh $FULL_LLVM $TOOLCHAIN_PREFIX
 
 # Build LLDB-MI
 COPY build-lldb-mi.sh ./
@@ -31,10 +31,10 @@ RUN ./build-lldb-mi.sh $TOOLCHAIN_PREFIX
 # but reduces build times if tweaking the contents of strip-llvm.sh.)
 # Most of the size of the docker image comes from the build directory that
 # we keep in any case.
-COPY strip-llvm.sh ./
-RUN ./strip-llvm.sh $TOOLCHAIN_PREFIX
+# COPY strip-llvm.sh ./
+# RUN ./strip-llvm.sh $TOOLCHAIN_PREFIX
 
-ARG TOOLCHAIN_ARCHS="i686 x86_64 armv7 aarch64"
+ARG TOOLCHAIN_ARCHS=x86_64
 
 # Install the usual $TUPLE-clang binaries
 COPY wrappers/*.sh wrappers/*.c wrappers/*.h ./wrappers/
